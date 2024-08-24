@@ -1,0 +1,14 @@
+Flows should be used for a smaller company. Never mix triggers and flows.
+Flows are limited to what can be done in the org and sometimes, you'll arrive
+at a point where you have to use apex coding. So in most instances, use triggers. 
+
+Never put methods for a specific object, within another trigger that's intended
+for the same object. For example, methodA() and methodB() both target the Account
+object, but they're in two different triggers that target the Account object.
+Basically, put all methods within one trigger for one object.
+
+When you want your user to see something update immediately, in real time, use a 
+trigger. If you don't want your user to see updates (i.e. application for a job 
+would require a HR to review the resume before the candidate moves to the interview
+stage, so you don't update them immediately whether they move to the interview stage),
+then put it in an async process. 
