@@ -7,7 +7,39 @@ public with sharing class BillAPI {
         Learn more about HTTPRequest: https://developer.salesforce.com/docs/atlas.en-us.apexref.meta/apexref/apex_classes_restful_http_httprequest.htm
         */
 
-        // Set up an Http object and an HTTPResponse object, then use the .getBody() method to get the response body.
+        HttpRequest request = new HttpRequest();
+        Http http = new Http();
+        HttpResponse response;
+
+        try {
+            //GET Method
+            request.setMethod('GET');
+            
+            // enpoint
+            request.setEndpoint('https://my-json-server.typicode.com/walters954/clicked-intro-development-server/bills');
+
+            // Send the request, get the response
+            response = http.send(request);
+
+            // Check the response status
+            // Set up an Http object and an HTTPResponse object, then use the .getBody() method to get the response body.
+        //https://developer.salesforce.com/docs/atlas.en-us.apexref.meta/apexref/apex_classes_restful_http_httprequest.htm#apex_System_HttpRequest_getBody
+            if (response.getStatusCode() == 200) {
+                String responseBody = response.getBody();
+                System.debug('Response Body: ' + responseBody);
+                return responseBody;
+            } else {
+                return 'Error: ' + response.getStatusCode() + ' - ' + response.getStatus();
+            }
+        } catch (Exception e) {
+            // Handle any exceptions
+            return 'Exception: ' + e.getMessage();
+        }
+    
+
+
+        
+
 
         // Deserialize the JSON response into a list of BillWrapper objects.
         // Learn more about JSON.deserialize: https://developer.salesforce.com/docs/atlas.en-us.apexref.meta/apexref/apex_class_System_Json.htm#apex_System_Json_deserialize

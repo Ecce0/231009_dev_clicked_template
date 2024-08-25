@@ -26,7 +26,7 @@ trigger billTrigger on Bill_c (before insert,after insert) {
         // Line 27 is the code to check info after update/new/etc. records */
         //Everything below came from chatGPT. I wasn't sure where to find the documentation
         //on how to create new records from another object outside of the trigger-based object
-        if (Trigger.isAfter && Trigger.isInsert) {
+        if (Trigger.isAfter) {
             List<Opportunity> opportunitiesToCreate = new List<Opportunity>();
     
             for (Bill__c bill : Trigger.new) {
