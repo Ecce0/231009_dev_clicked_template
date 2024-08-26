@@ -1,9 +1,9 @@
 //Salesforce CLI Command to create trigger:
 //sf apex generate trigger --name billTrigger  --event 'before insert,after insert' --sobject Bill_c --output-dir force-app/main/default/triggers//
 
-trigger billTrigger on Bill_c (before insert,after insert) {
+trigger billTrigger on Bill_c (before insert, after insert) {
     /** Line 6 is the code to check info before update/new/etc. records */
-    if(Trigger.isBefore)
+    if(Trigger.isBefore) { 
     for (Bill_C bill: Trigger.new) {
         /** everything below this line is for all new inserts on the 
          * specific record of the stated object (Bill__c in 
@@ -21,12 +21,12 @@ trigger billTrigger on Bill_c (before insert,after insert) {
             
             bill.Invoice_Number__c = UUID.randomUUID().toString().substring(0, 25);
         }
-
+    }
 
         // Line 27 is the code to check info after update/new/etc. records */
         //Everything below came from chatGPT. I wasn't sure where to find the documentation
         //on how to create new records from another object outside of the trigger-based object
-        if (Trigger.isAfter && Trigger.isInsert) {
+        if (Trigger.isAfter) {
             List<Opportunity> opportunitiesToCreate = new List<Opportunity>();
     
             for (Bill__c bill : Trigger.new) {
