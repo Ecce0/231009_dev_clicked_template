@@ -1,3 +1,14 @@
+// Use .apex files to store anonymous Apex.
+// You can execute anonymous Apex in VS Code by selecting the
+//     apex text and running the command:
+//     SFDX: Execute Anonymous Apex with Currently Selected Text
+// You can also execute the entire file by running the command:
+//     SFDX: Execute Anonymous Apex with Editor Contents
+
+// string tempvar = 'Enter_your_name_here';
+// System.debug('Hello World!');
+// System.debug('My name is ' + tempvar);
+
 public with sharing class BillAPI {
     public static void getBills() {
         // Step 1: Create an HttpRequest object and set the endpoint and method.
@@ -9,6 +20,7 @@ public with sharing class BillAPI {
         Http http = new Http();
         HttpResponse res = http.send(req);
         String responseBody = res.getBody();
+        System.debug(o, responseBody);
         
         // Step 3: Deserialize the JSON response into a list of BillWrapper objects.
         List<BillWrapper> bwList = (List<BillWrapper>)JSON.deserialize(responseBody, List<BillWrapper>.class);
@@ -28,7 +40,7 @@ public with sharing class BillAPI {
         }
         
         // Step 8: Iterate over the list of BillWrapper objects and create a new Bill__c record for each.
-        for (BillWrapper bill : bills) {
+        for (BillWrapper bill : bwList) {
             if (accountMap.containsKey(bill.accountName)) {
                 Bill__c newBill = new Bill__c();
                 newBill.Account__c = accountMap.get(bill.accountName);
@@ -38,7 +50,6 @@ public with sharing class BillAPI {
             }
         }
         
-        // Step 9: Insert the new bills list.
         if (!newBills.isEmpty()) {
             insert newBills;
         }
