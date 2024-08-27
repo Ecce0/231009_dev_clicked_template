@@ -1,18 +1,18 @@
 //Salesforce CLI Command to create trigger:
-//sf apex generate trigger --name billTrigger  --event 'before insert,after insert' --sobject Bill_c --output-dir force-app/main/default/triggers//
+//sf apex generate trigger --name billTrigger  --event 'before insert,after insert' --sobject Bill__c --output-dir force-app/main/default/triggers//
 
-trigger billTrigger on Bill_c (before insert, after insert) {
+trigger billTrigger on Bill__c (before insert, after insert) {
     /** Line 6 is the code to check info before update/new/etc. records */
     if(Trigger.isBefore) { 
-    for (Bill_C bill: Trigger.new) {
+    for (Bill__c bill: Trigger.new) {
         /** everything below this line is for all new inserts on the 
          * specific record of the stated object (Bill__c in 
          * this case) */
-        if (bill.Account__c === '' || bill.Account__c === null) {
+        if (bill.Account__c == '' || bill.Account__c == null) {
             bill.Account__c.addError('The Account number is required');
         }
 
-        if (bill.Invoice_Number__c.length === 0 || bill.Invoice_Number__c === null) {
+        if (bill.Invoice_Number__c.length == 0 || bill.Invoice_Number__c == null) {
             /** to create a random number:
              * UUID randomUuid = UUID.randomUUID();
                 System.debug(randomUuid); 
