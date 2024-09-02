@@ -1,4 +1,11 @@
 public with sharing class BillAPI {
+
+    public class BillWrapper {
+        public String billId;
+        public String accountName;
+        public String balance;
+    }
+
     public static void getBills() {
         // Step 1: Create an HttpRequest object and set the endpoint and method.
         HttpRequest req = new HttpRequest();
@@ -42,11 +49,5 @@ public with sharing class BillAPI {
         if (!newBills.isEmpty()) {
             insert newBills;
         }
-    }
-
-    public class BillWrapper {
-        public String billId;
-        public String accountName;
-        public String balance;
     }
 }
